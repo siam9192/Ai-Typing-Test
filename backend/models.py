@@ -24,7 +24,7 @@ class TestMode (str,enum.Enum):
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True,autoincrement=True)
     email = Column(String, unique=True, nullable=False)
     full_name = Column(String(50), nullable=False)
     hashed_password = Column(String, nullable=False)
@@ -61,7 +61,7 @@ class User(Base):
 class Test(Base):
     __tablename__ = "tests"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True,autoincrement=True)
     wpm = Column(Integer, nullable=False)
     cpm = Column(Integer, nullable=False)
     error_count = Column(Integer, nullable=False)

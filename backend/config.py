@@ -9,7 +9,7 @@ class Settings (BaseSettings):
     debug: bool = False
     
     # Database
-    database_url: str = "postgresql://user:password@localhost/ecommerce_db"
+    database_url: str = "postgresql://postgres:1234@localhost:5432/ai-typing"
     # For local development: sqlite:///./ecommerce.db
     
     # Security

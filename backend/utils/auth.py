@@ -20,14 +20,14 @@ security = HTTPBearer(auto_error=False)
 
 # Authentication utility functions
 
-def has_password (password:str) ->str:
+def hash_password (password:str) ->str:
     """Hash a password"""
     return pwd_context.hash(password)
 
 
 
 def verify_password(plain_password:str,hash_password):
-    return pwd_context.verify(plain_password,has_password)
+    return pwd_context.verify(plain_password,hash_password)
 
 
 def create_access_token (data:Dict[str,any],expires_delta:Optional[timedelta]=None)->str:
@@ -49,7 +49,7 @@ def create_refresh_token(data:Dict[str,any],expires_delta:Optional[timedelta])->
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        timedelta(minutes=settings.access_token_expire_minutes)
+        timedelta(days=settings.refresh_token_expire_days)
     to_encode.update({"exp":expire})
     encoded_jwt =  jwt.encode(to_encode,settings.secret_key,algorithm=settings.algorithm)
     return encoded_jwt

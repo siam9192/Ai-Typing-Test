@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from config import get_settings
-# from database import Base,engine
-
+from database import Base,engine
+from routes.auth import router as auth_router
 
 
 settings =  get_settings()
@@ -24,11 +24,12 @@ app.add_middleware(
     )
 
 
+app.include_router(auth_router)
 
 @app.on_event("startup")
 def startup_event():
-    # Base.metadata.create_all(bind=engine)
-    pass
+    Base.metadata.create_all(bind=engine)
+    
    
 @app.get("/")
 def root():
