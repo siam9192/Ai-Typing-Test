@@ -19,7 +19,13 @@ class TestMode (str,enum.Enum):
     TEST = "test"
     COMPETITIVE = "competitive"
     
+
+class TestLevel(str,enum.Enum):
+    EASY = "easy",
+    MEDIUM = "medium"
+    EXPERT = "expert"
     
+
 
 class User(Base):
     __tablename__ = "users"
@@ -44,7 +50,7 @@ class User(Base):
     highest_score = Column(Integer,default=0,nullable=False) 
     highest_wpm = Column(Integer,default=0,nullable=False)
     participation_count = Column(Integer,default=0,nullable=False)
-    
+    test_level = Column(Enum(TestLevel),nullable=True)
     
     # Relationships
     tests = relationship(
@@ -82,6 +88,9 @@ class Test(Base):
         ForeignKey("users.id"),
         nullable=False
     )
+    
+    created_at = Column(DateTime,default=datetime.utcnow,index=True)
+    updated_at = Column(DateTime,default=datetime.utcnow,onupdate=datetime.utcnow)
 
     # Relationship
     user = relationship(
@@ -89,5 +98,6 @@ class Test(Base):
         back_populates="tests"
     )
     
+
 
     

@@ -1,6 +1,7 @@
-from pydantic import BaseModel,EmailStr,Field
+from pydantic import BaseModel,EmailStr,Field,Json
 from typing import Optional,List,Dict,Any
 from datetime import datetime
+from models import TestMode,TestLevel
 
 class UserRegister(BaseModel):
     email:EmailStr
@@ -44,3 +45,34 @@ class TokenResponse(BaseModel):
 class TokenRefresh(BaseModel):
      refresh_token: str
   
+  
+class TestData(BaseModel):
+    wpm: int
+    cpm: int
+    error_count: int
+    accuracy: int
+    time_sec: int
+    progress_tracking: Dict[str, Any]
+    mode: TestMode
+    level: TestLevel
+    
+
+class TestResponse (BaseModel):
+    id:int
+    wpm:int
+    cpm:int
+    error_count:int
+    accuracy:int
+    time_sec:int
+
+    progress_tracking:Dict[str,any]
+    score_summary:Dict[str,any]
+    total_score:int
+    ai_suggestion:str
+    mode:TestMode
+    user_id:int
+    created_at:datetime
+    updated_at:datetime
+    
+    class config:
+        from_attributes = True
